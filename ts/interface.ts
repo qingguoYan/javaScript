@@ -9,7 +9,7 @@ interface MyCat {
   color?: string;
 }
 
-let cat: MyCat = {
+let cat1: MyCat = {
   id: 1,
   name: "小花",
   age: 2,
