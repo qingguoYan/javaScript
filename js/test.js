@@ -1,8 +1,6 @@
-var a = 1;
-function test() {
-  var a = 2;
-  console.log(a);
+function name() {
+  console.log(arguments);
+  console.log(Array.from(arguments));
 }
 
-test();
-console.log(a);
+name(1, 2, 3);
