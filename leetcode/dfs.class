@@ -1,0 +1,36 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        int nr = grid.length; //获得行数
+        
+        int nc = grid[0].length; //获得列数
+        
+        int num = 0; //岛屿数量
+        //遍历整个网格    
+        for(int r = 0; r < nr; r++){
+            for(int c = 0; c < nc; c++){
+                //找到第一个岛屿
+                if(grid[r][c] =='1' ){
+                    num++;
+                    //寻找相邻的岛屿
+                    dfs(grid,r,c);
+                }
+            }
+        }
+        return num;
+    }
+    
+    private void dfs(char[][] grid,int r,int c){
+         int nr = grid.length; //获得行数
+         int nc = grid[0].length; //获得列数
+          if (r < 0 || c < 0 || r >= nr || c >= nc || grid[r][c] == '0') {
+            return;
+        }
+        //将找到的岛屿标记为0，避免重复查找造成死循环
+        grid[r][c] = '0';
+        //判断岛屿的上下左右是不是岛屿
+        dfs(grid, r - 1, c);
+        dfs(grid, r + 1, c);
+        dfs(grid, r, c - 1);
+        dfs(grid, r, c + 1);
+    }   
+}
