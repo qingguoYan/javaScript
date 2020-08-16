@@ -37,8 +37,29 @@ function* getList() {
   console.log(res);
   return "hello";
 }
-const result = run(getList);
-console.log(
-  "jj",
-  result.then((res) => console.log(res))
-);
+
+//不自动执行generator，通过yield返回的promise调用迭代器next方法并将promise的决议值传回generator
+function* generator() {
+  const res = yield foo();
+  return res;
+}
+
+function foo() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log("返回一个promise");
+      resolve(1);
+    }, 1000);
+  });
+}
+
+const it = generator();
+console.log(it);
+const promise = it.next().value;
+console.log(promise);
+
+promise.then((res) => {
+  setTimeout(() => {
+    console.log(it.next(res));
+  }, 5000);
+});
