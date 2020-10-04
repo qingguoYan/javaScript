@@ -20,6 +20,7 @@ function run(gen) {
     return (function handleResult(next) {
       if (next.done) {
         //如果执行完成
+        console.log(next.value); //hello
         return next.value;
       } else {
         return Promise.resolve(next.value).then(handleNext, function handleErr(
@@ -38,28 +39,30 @@ function* getList() {
   return "hello";
 }
 
+run(getList);
+
 //不自动执行generator，通过yield返回的promise调用迭代器next方法并将promise的决议值传回generator
-function* generator() {
-  const res = yield foo();
-  return res;
-}
+// function* generator() {
+//   const res = yield foo();
+//   return res;
+// }
 
-function foo() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("返回一个promise");
-      resolve(1);
-    }, 1000);
-  });
-}
+// function foo() {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       console.log("返回一个promise");
+//       resolve(1);
+//     }, 1000);
+//   });
+// }
 
-const it = generator();
-console.log(it);
-const promise = it.next().value;
-console.log(promise);
+// const it = generator();
+// console.log(it);
+// const promise = it.next().value;
+// console.log(promise);
 
-promise.then((res) => {
-  setTimeout(() => {
-    console.log(it.next(res));
-  }, 5000);
-});
+// promise.then((res) => {
+//   setTimeout(() => {
+//     console.log(it.next(res));
+//   }, 5000);
+// });
