@@ -1,19 +1,20 @@
-// add(1)(2)(3)(4)()
-function curry(...value) {
-  let args = [...value];
-  function add(...args) {
-    console.log(args);
-    return args.reduce((a, b) => a + b);
-  }
-  return function c(...newArgs) {
-    if (newArgs.length) {
-      args = [...args, ...newArgs];
-      return c;
-    } else {
-      return add(...args);
+function reverse(str) {
+  const arr = str.split(" ");
+  for (let i = 0; i < arr.length; i++) {
+    const strArr = [];
+    for (let j = 0; j < arr[i].length; j++) {
+      strArr.push(arr[i][j]);
     }
-  };
-}
+    let str = "";
+    let reverseArr = strArr.reverse();
+    for (let i = 0; i < reverseArr.length; i++) {
+      str += reverseArr[i];
+    }
+    arr[i] = str;
+  }
 
-// const add = curry();
-console.log(curry(1)(2)(3)(4)());
+  return arr.join(" ");
+}
+console.log(reverse("name age"));
+
+// 0 1 2 3
