@@ -14,9 +14,3 @@ btn.addEventListener("click", function () {
 function getRandom() {
   return Math.floor(Math.random() * colors.length);
 }
-
-const ul = document.getElementById("ul");
-console.log(ul);
-ul.addEventListener("click", function (e) {
-  console.log(e);
-});

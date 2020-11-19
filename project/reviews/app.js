@@ -64,4 +64,6 @@ function showPerson(currentItem) {
 
 //TODO: 1. 通过请求获得模拟数据 2.首次图片加载的很慢 3.了解浏览器缓存机制
 //已经使用XMLHttpRequest对象模拟了异步请求
-//图片加载慢解决方案：懒加载、
+//图片加载慢解决方案：懒加载
+//浏览器缓存机制 强缓存 http1.0 的expires和http1.1的cache-control控制
+//协商缓存 last-modified/if-modified-since 和etag/if-no-match
