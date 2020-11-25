@@ -6,3 +6,11 @@
 html body {
   height: 100vh;
 }
+
+#root {
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  line-height: 40px;
+  height: 40px;
+}
