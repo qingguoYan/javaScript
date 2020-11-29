@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盒子模型</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            height: 100vh;
+            margin:auto auto
+        }
+        .border-box{
+            width: 200px;
+            height: 200px;
+            box-sizing: border-box;
+            padding: 20px;
+            border: 10px solid black;
+            background-color: rgb(65, 158, 240);
+        }
+        .content-box{
+            width: 200px;
+            height: 200px;
+            box-sizing: content-box;
+            border: 10px solid black;
+            padding: 20px;
+            background-color: rgb(200, 166, 245);
+        }
+    </style>
+</head>
+<body>
+    <div class="border-box"></div>
+    <div class="content-box"></div>
+    <span style="width: 100px; height: 100px;margin:10px;padding:10px;border: 1px solid black;">hello</span><span style="display:inline-block;margin:0px">world</span>
+    <div style="width: 24px;height: 24px;background-color: red;"></div>
+    <ul style="display: inline-flex;list-style: none;"><li style="margin: 10px;">1</li><li>2</li><li>3</li></ul>
+    <div style="display: inline-flex;"><span style="display:inline;margin: 10px;">4</span><span>5</span><span>6</span></div>
+</body>
+</html>

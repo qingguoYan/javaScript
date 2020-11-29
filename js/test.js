@@ -1,15 +1,22 @@
-// function LeftRotateString(str, n) {
-//   //   if (n <= 0) return str;
-//   // write code here
-//   const s1 = str.substr(0, n);
-//   console.log(s1);
-//   const s2 = str.substr(n);
-//   console.log(s2);
-//   console.log(s2 + s1);
-//   return s2 + s1;
-// }
+let a = 1;
 
-// LeftRotateString("yanqingguo", -1);
+let obj = {
+  a: 2,
+  c: function () {
+    let c = {
+      a: this.a,
+      d: this.a,
+    };
+    let o = () => {
+      console.log(this.a);
+    };
+    o();
+    console.log(c.a);
+    console.log(c.d);
+  },
+};
 
-const a = new Array(10).fill(0);
-console.log(a);
+obj.c();
+
+let y = obj.c;
+y();

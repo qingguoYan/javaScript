@@ -7,10 +7,10 @@ const a = 1;
 const obj = {
   a: 2,
   show1: function () {
-    console.log(this);
+    console.log(this.a);
   },
   show2: () => {
-    console.log(this);
+    console.log(this.a);
   },
 };
 
@@ -21,3 +21,5 @@ const func1 = obj.show1;
 const func2 = obj.show2;
 func1();
 func2();
+
+// 2 undefined undefined undefined
