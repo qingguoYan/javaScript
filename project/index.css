@@ -7,10 +7,14 @@ html body {
   height: 100vh;
 }
 
-#root {
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  line-height: 40px;
-  height: 40px;
+article {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: start;
+}
+
+article div {
+  height: 50px;
+  width: 50px;
+  background-color: red;
 }
