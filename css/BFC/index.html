@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFC</title>
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <style>
+        *{
+            margin:0px;
+            padding: 0px;
+        }
+        .box {
+            background-color: rgb(224, 206, 247);
+            border: 5px solid rebeccapurple;
+            overflow: hidden;
+        }
+        .float{
+            float: left;
+            height: 200px;
+            width: 200px;
+            background-color: white;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="float"><spa>Ifl </span></div>
+        <!-- <div style="clear: both;"></div>     -->
+        <!-- <div style="word-break:break-all;color:red;margin-top: 80px;">I am content inside the container.I am content inside the container.I am content inside the container.I am content inside the container.
+           ntainer.fdsfwefewfewfewfewfewr32r2332r32r32r32r23fesahudjsdfsdfewfewuhfiuwehfiuewhuifhewiuhfiuwehfiuh2eiufh
+           fdsfwefewfewfewfewfewr32r2332r32r32r32r23fesahudjsdfsdfewfewuhfiuwehfiuewhuifhewiuhfiuwehfiuh2eiufh
+        </div> -->
+       
+        <p>hello world</p>
+    </div>
+    <div>jjj</div>
+</div>
+</body>
+</html>

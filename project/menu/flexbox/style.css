@@ -118,13 +118,13 @@ body {
   -webkit-line-clamp: 5; */
 }
 
-.menu-item p::after {
+/* .menu-item p::after {
   content: "...";
   bottom: 0;
   right: 0;
   padding: 0;
   position: absolute;
-}
+} */
 
 @media screen and (min-width: 768px) {
   .menu-item {
