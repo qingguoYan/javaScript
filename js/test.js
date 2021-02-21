@@ -1,22 +1,45 @@
-let a = 1;
+function A(age) {
+  this.age = age;
+}
 
-let obj = {
-  a: 2,
-  c: function () {
-    let c = {
-      a: this.a,
-      d: this.a,
-    };
-    let o = () => {
-      console.log(this.a);
-    };
-    o();
-    console.log(c.a);
-    console.log(c.d);
-  },
-};
+function B(name, age) {
+  this.name = name;
+  A.call(this, age);
+}
 
-obj.c();
+B.prototype = Object.create(A.prototype);
 
-let y = obj.c;
-y();
+const b = new B("tom", 12);
+
+console.log(b.name);
+console.log(b.age);
+B.prototype.sex = "man";
+console.log(b.sex);
+
+console.log(b.__proto__);
+
+// const a = { name: "yqg", age: 1 };
+
+// Object.defineProperty(a, "name", {
+//   writable: true,
+//   configurable: true,
+//   enumerable: true,
+//   value: "xixi",
+// });
+
+// Object.defineProperty(a, "name", {
+//   get: function () {
+//     return this.age;
+//   },
+//   set: function (name) {
+//     this.name = name;
+//   },
+// });
+
+// a.name = "fdsfewf";
+
+// console.log(a.name);
+
+// function hasPrototypeType (obj,property){
+//   return !obj.hasOwnProperty(property) && property in obj;
+// }

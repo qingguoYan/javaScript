@@ -3,7 +3,7 @@
  */
 
 function Food() {
-  this.sayFood = function() {
+  this.sayFood = function () {
     console.log("say food food");
   };
 }
@@ -11,7 +11,7 @@ function Food() {
 Food.prototype.category = "美好的东西";
 
 function Fruit() {
-  this.sayFood = function() {
+  this.sayFood = function () {
     console.log("say fruit fruit");
   };
 }
