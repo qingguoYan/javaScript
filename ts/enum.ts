@@ -1,0 +1,4 @@
+enum Dir{
+    DOWN,
+    UP,
+}
