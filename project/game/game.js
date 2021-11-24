@@ -24,81 +24,10 @@ var data = [
         block: [[1, 1, 1, 1]],
         rotateBlock: [[1], [1], [1], [1]]
     },
-    {
-        rotate: false,
-        block: [
-            [1, 1],
-            [1, 1],
-        ],
-        rotateBlock: [
-            [1, 1],
-            [1, 1],
-        ]
-    },
-    {
-        rotate: false,
-        block: [
-            [1, 1, 0],
-            [0, 1, 1],
-        ],
-        rotateBlock: [
-            [0, 1],
-            [1, 1],
-            [1, 0],
-        ]
-    },
-    {
-        rotate: false,
-        block: [
-            [0, 1, 1],
-            [1, 1, 0],
-        ],
-        rotateBlock: [
-            [1, 0],
-            [1, 1],
-            [0, 1],
-        ]
-    },
-    {
-        rotate: false,
-        block: [
-            [0, 1, 0],
-            [1, 1, 1],
-        ],
-        rotateBlock: [
-            [1, 0],
-            [1, 1],
-            [1, 0],
-        ]
-    },
-    {
-        rotate: false,
-        block: [
-            [1, 0, 0],
-            [1, 1, 1],
-        ],
-        rotateBlock: [
-            [1, 1],
-            [1, 0],
-            [1, 0],
-        ]
-    },
-    {
-        rotate: false,
-        block: [
-            [0, 0, 1],
-            [1, 1, 1],
-        ],
-        rotateBlock: [
-            [1, 0],
-            [1, 0],
-            [1, 1],
-        ]
-    },
 ];
 function generatorBlock() {
     var random = Math.floor(Math.random() * 7);
-    return data[random];
+    return data[0];
 }
 var DIRCTIONARY;
 (function (DIRCTIONARY) {
@@ -122,7 +51,8 @@ var RussiaGame = /** @class */ (function () {
         this.col = 7;
         this.array = [];
         for (var i = 0; i < 20; i++) {
-            this.array[i] = new Array(15).fill(0);
+            var a = new Array(15);
+            this.array[i] = a.fill(0);
         }
         this.rowLength = this.array.length;
         this.colLength = this.array[0].length;
@@ -240,6 +170,37 @@ var RussiaGame = /** @class */ (function () {
         }
         return true;
     };
+    RussiaGame.prototype.removeRow = function () {
+        var removeDownnum = 0;
+        for (var i = 0; i < this.rowLength; i++) {
+            var isRedRow = true;
+            for (var j = 0; j < this.colLength; j++) {
+                var block = this.array[i][j];
+                if (block !== BlockType.RED) {
+                    isRedRow = false;
+                    break;
+                }
+            }
+            if (isRedRow) {
+                for (var j = 0; j < this.colLength; j++) {
+                    this.array[i][j] = BlockType.WHITE;
+                }
+                removeDownnum++;
+                // 消失的行上面红色的格子向下移动
+                console.log('我变白了');
+            }
+        }
+        if (removeDownnum !== 0) {
+            for (var i = 0; i < this.rowLength; i++) {
+                for (var j = 0; j < this.colLength; j++) {
+                    if (this.array[i][j] === 1) {
+                        this.array[i][j] = 0;
+                        this.array[i + removeDownnum][j] = 2;
+                    }
+                }
+            }
+        }
+    };
     RussiaGame.prototype.move = function (dirctionary) {
         // 如果越过边界,不移动
         var currentBlock = this.getCurrentBlock();
@@ -260,6 +221,8 @@ var RussiaGame = /** @class */ (function () {
             this.col = 7;
             this.currentBlockObj = generatorBlock();
             this.drawBlock(this.getCurrentBlock());
+            //TODO: 满足整行则消失
+            this.removeRow();
             this.draw();
             return console.log('下一个方块应该产生了');
         }
@@ -283,77 +246,31 @@ var RussiaGame = /** @class */ (function () {
         this.drawBlock(currentBlock);
         this.draw();
     };
-    return RussiaGame;
-}());
-var game = {
-    //向下运动
-    moveToDown: function () {
-        var block = this.block.rotate ? this.block.rotateBlock : this.block.block;
-        var len = this.data.length - block.length;
-        if (this.x < len) {
-            if (this.isTouch('down')) {
-                for (var i = 0; i < block.length; i++) {
-                    for (var j = 0; j < block[0].length; j++) {
-                        if (block[i][j] === 1) {
-                            var x = this.x;
-                            var y = this.y;
-                            this.data[i + x][j + y] = 2;
-                        }
-                    }
+    // 计算红色高度
+    RussiaGame.prototype.getHeight = function () {
+        var height = 0;
+        for (var i = this.rowLength - 1; i >= 0; i--) {
+            // 如果整行都是红色
+            var redSize = 0;
+            var whiteSize = 0;
+            for (var j = this.colLength - 1; j >= 0; j--) {
+                if (this.array[i][j] === 2) {
+                    redSize++;
+                    break;
                 }
-                this.x = 0;
-                this.y = 9;
-                this.block = this.generatorBlock();
-                console.table(this.data);
+                if (this.array[i][j] === 0) {
+                    whiteSize++;
+                }
+            }
+            if (whiteSize === this.colLength - 1) {
+                return height;
             }
             else {
-                this.x++;
+                height++;
             }
         }
-        else {
-            //触碰到底部，格子填充2
-            for (var i = 0; i < block.length; i++) {
-                for (var j = 0; j < block[0].length; j++) {
-                    if (this.x === len && block[i][j] === 1) {
-                        //判断是否到达底部，到达底部后格子设置为2
-                        var x = this.x;
-                        var y = this.y;
-                        this.data[i + x][j + y] = 2;
-                    }
-                }
-            }
-            this.x = 0;
-            this.y = 9;
-            this.block = this.generatorBlock();
-        }
-        this.clear();
-        this.render();
-    },
-    /**
-     * 检测是否与格子2接触
-     */
-    isTouch: function (dic) {
-        var block = this.block.rotate ? this.block.rotateBlock : this.block.block;
-        var distanceRow = 0;
-        var distanceCol = 0;
-        if (dic === 'down') {
-            distanceRow = 1;
-        }
-        else if (dic === 'left') {
-            distanceCol = -1;
-        }
-        else {
-            distanceCol = +1;
-        }
-        for (var i = 0; i < block.length; i++) {
-            for (var j = 0; j < block[0].length; j++) {
-                if (this.data[i + this.x + distanceRow][j + this.y + distanceCol] === 2 &&
-                    block[i][j] === 1) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-};
+        return height;
+    };
+    return RussiaGame;
+}());
 var russiaGame = new RussiaGame();

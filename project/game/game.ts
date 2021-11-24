@@ -25,81 +25,81 @@ const data = [
     block: [[1, 1, 1, 1]],
     rotateBlock: [[1], [1], [1], [1]],
   },
-  {
-    rotate: false,
-    block: [
-      [1, 1],
-      [1, 1],
-    ],
-    rotateBlock: [
-      [1, 1],
-      [1, 1],
-    ],
-  },
-  {
-    rotate: false,
-    block: [
-      [1, 1, 0],
-      [0, 1, 1],
-    ],
-    rotateBlock: [
-      [0, 1],
-      [1, 1],
-      [1, 0],
-    ],
-  },
-  {
-    rotate: false,
-    block: [
-      [0, 1, 1],
-      [1, 1, 0],
-    ],
-    rotateBlock: [
-      [1, 0],
-      [1, 1],
-      [0, 1],
-    ],
-  },
-  {
-    rotate: false,
-    block: [
-      [0, 1, 0],
-      [1, 1, 1],
-    ],
-    rotateBlock: [
-      [1, 0],
-      [1, 1],
-      [1, 0],
-    ],
-  },
-  {
-    rotate: false,
-    block: [
-      [1, 0, 0],
-      [1, 1, 1],
-    ],
-    rotateBlock: [
-      [1, 1],
-      [1, 0],
-      [1, 0],
-    ],
-  },
-  {
-    rotate: false,
-    block: [
-      [0, 0, 1],
-      [1, 1, 1],
-    ],
-    rotateBlock: [
-      [1, 0],
-      [1, 0],
-      [1, 1],
-    ],
-  },
+  // {
+  //   rotate: false,
+  //   block: [
+  //     [1, 1],
+  //     [1, 1],
+  //   ],
+  //   rotateBlock: [
+  //     [1, 1],
+  //     [1, 1],
+  //   ],
+  // },
+  // {
+  //   rotate: false,
+  //   block: [
+  //     [1, 1, 0],
+  //     [0, 1, 1],
+  //   ],
+  //   rotateBlock: [
+  //     [0, 1],
+  //     [1, 1],
+  //     [1, 0],
+  //   ],
+  // },
+  // {
+  //   rotate: false,
+  //   block: [
+  //     [0, 1, 1],
+  //     [1, 1, 0],
+  //   ],
+  //   rotateBlock: [
+  //     [1, 0],
+  //     [1, 1],
+  //     [0, 1],
+  //   ],
+  // },
+  // {
+  //   rotate: false,
+  //   block: [
+  //     [0, 1, 0],
+  //     [1, 1, 1],
+  //   ],
+  //   rotateBlock: [
+  //     [1, 0],
+  //     [1, 1],
+  //     [1, 0],
+  //   ],
+  // },
+  // {
+  //   rotate: false,
+  //   block: [
+  //     [1, 0, 0],
+  //     [1, 1, 1],
+  //   ],
+  //   rotateBlock: [
+  //     [1, 1],
+  //     [1, 0],
+  //     [1, 0],
+  //   ],
+  // },
+  // {
+  //   rotate: false,
+  //   block: [
+  //     [0, 0, 1],
+  //     [1, 1, 1],
+  //   ],
+  //   rotateBlock: [
+  //     [1, 0],
+  //     [1, 0],
+  //     [1, 1],
+  //   ],
+  // },
 ];
 function generatorBlock() {
   const random = Math.floor(Math.random() * 7);
-  return data[random];
+  return data[0];
 }
 
 enum DIRCTIONARY {
@@ -123,14 +123,15 @@ class RussiaGame {
   rowLength: number;
 
   constructor() {
-    const canvas = document.getElementById('myCanvas');
+    const canvas = document.getElementById('myCanvas') as any;
     this.cv = canvas.getContext('2d');
     this.currentBlockObj = generatorBlock();
     this.row = 0;
     this.col = 7;
     this.array = [];
     for (let i = 0; i < 20; i++) {
-      this.array[i] = new Array(15).fill(0);
+      const a = new Array(15) as any;
+      this.array[i] = a.fill(0);
     }
     this.rowLength = this.array.length;
     this.colLength = this.array[0].length;
@@ -265,6 +266,40 @@ class RussiaGame {
     return true;
   }
 
+  removeRow() {
+    // let removeDownnum = 0;
+    for (let i = 0; i < this.rowLength; i++) {
+      let isRedRow = true;
+      for (let j = 0; j < this.colLength; j++) {
+        const block = this.array[i][j];
+        if (block !== BlockType.RED) {
+          isRedRow = false;
+          break;
+        }
+      }
+      if (isRedRow) {
+        for (let j = 0; j < this.colLength; j++) {
+          this.array[i][j] = BlockType.WHITE;
+          // this.array[i - 1][j] = BlockType.RED;
+        }
+        // removeDownnum++;
+        // 消失的行上面红色的格子向下移动
+        //TODO: 计分
+        console.log('我变白了');
+      }
+    }
+    // if (removeDownnum !== 0) {
+    //   for (let i = 0; i < this.rowLength; i++) {
+    //     for (let j = 0; j < this.colLength; j++) {
+    //       if (this.array[i][j] === 2) {
+    //         this.array[i][j] = 0;
+    //         this.array[i + removeDownnum][j] = 2;
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
   move(dirctionary: DIRCTIONARY) {
     // 如果越过边界,不移动
     const currentBlock = this.getCurrentBlock();
@@ -290,6 +325,8 @@ class RussiaGame {
       this.col = 7;
       this.currentBlockObj = generatorBlock();
       this.drawBlock(this.getCurrentBlock());
+      //TODO: 满足整行则消失
+      this.removeRow();
       this.draw();
       return console.log('下一个方块应该产生了');
     }
