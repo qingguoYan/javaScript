@@ -12,3 +12,7 @@
   overflow: hidden;
   background: red;
 }
+
+.bfc {
+  overflow: hidden;
+}
